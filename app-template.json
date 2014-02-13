@@ -1,4 +1,5 @@
 {
+  "id": "mysql-cloud",
   "name": "MySQL Connector",
   "type": "cloud_nodejs",
   "docs": "https://raw2.github.com/feedhenry/fh-connector-mysql-cloud/master/README.md",
