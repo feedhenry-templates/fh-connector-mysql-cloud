@@ -18,8 +18,7 @@ exports.mysql = function(params, cb) {
     }
 
     return cb(err, {
-      rows: rows,
-      fields: fields
+      rows: rows
     });
   });
 
