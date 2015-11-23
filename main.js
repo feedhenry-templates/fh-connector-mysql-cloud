@@ -12,7 +12,7 @@ exports.mysql = function(params, cb) {
 
   connection.connect();
 
-  connection.query(params.query, function(err, rows, fields) {
+  connection.query(params.query, function(err, rows) {
     if (err) {
       return cb(err);
     }
