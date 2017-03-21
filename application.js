@@ -10,6 +10,14 @@ securableEndpoints = [];
 
 var app = express();
 
+var jbpmPort = process.env.JBPM_PORT || process.env.OPENSHIFT_JBPM_PORT || 8080;
+var jbpmHost = process.env.JBPM_IP || process.env.OPENSHIFT_JBPM_IP || '0.0.0.0';
+var jbpmUsername = process.env.JBPM_USERNAME || process.env.OPENSHIFT_JBPM_USERNAME || null;
+var jbpmPassword = process.env.JBPM_PASSWORD || process.env.OPENSHIFT_JBPM_PASSWORD || null;
+
+var port = process.env.FH_PORT || process.env.OPENSHIFT_NODEJS_PORT || 8001;
+var host = process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
+
 // Enable CORS for all requests
 //app.use(cors());
 
@@ -23,16 +31,17 @@ app.use(express.static(__dirname + '/public'));
 // Note: important that this is added just before your own Routes
 app.use(mbaasExpress.fhmiddleware());
 
-var jbpmPort = process.env.JBPM_PORT || process.env.OPENSHIFT_JBPM_PORT || 8080;
-var jbpmHost = process.env.OPENSHIFT_JBPM_IP || '0.0.0.0';
-
-app.use('/jbpm', proxy(jbpmHost + ':' + jbpmPort));
+app.use('/jbpm', proxy(jbpmHost + ':' + jbpmPort, {
+  decorateRequest: function(proxyReq) {
+    if(jbpmUsername && jbpmPassword)
+      proxyReq.headers['Authorization'] = 'Basic ' + new Buffer(jbpmUsername + ':' + jbpmPassword).toString('base64');
+    return proxyReq;
+  }
+}));
 
 // Important that this is last!
 app.use(mbaasExpress.errorHandler());
 
-var port = process.env.FH_PORT || process.env.OPENSHIFT_NODEJS_PORT || 8001;
-var host = process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
 app.listen(port, host, function() {
   console.log("App started at: " + new Date() + " on port: " + port); 
 });

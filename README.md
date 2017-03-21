@@ -16,7 +16,7 @@
 
 ### Adding Unit Tests
 
-Unit tests should be added to the same directory of the test target file. It should have a suffix wtih "_test.js". Tests should be written using ES6 syntax as well. To run all the tests:
+Unit tests should be added to the same directory of the test target file. It should have a prefix with "test_". To run all the tests:
 
 ```bash
 grunt unit
@@ -24,7 +24,18 @@ grunt unit
 
 ### Running Acceptance Tests
 
-In order to run the acceptance tests, you will need to have jBPM running somewhere. Refer to [Docker](#Docker) for more details
+In order to run the acceptance tests, you will need to have jBPM running somewhere. Refer to [Docker](#Docker) for more details.
+
+You also need to set the process environments: 
+
+```bash
+export JBPM_IP= #jBPM host's IP address
+export JBPM_PORT= #jBPM port
+export JBPM_USERNAME= #Your jBPM username
+export JBPM_PASSWORD= #Your jBPM password
+```
+
+Finally, you can run the acceptance tests:
 
 ```bash
 grunt accept
