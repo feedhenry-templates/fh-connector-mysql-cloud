@@ -1,7 +1,8 @@
 var mbaasApi = require('fh-mbaas-api');
 var express = require('express');
 var mbaasExpress = mbaasApi.mbaasExpress();
-var cors = require('cors');
+//var cors = require('cors');
+var proxy = require('express-http-proxy');
 
 // list the endpoints which you want to make securable here
 var securableEndpoints;
@@ -10,7 +11,7 @@ securableEndpoints = [];
 var app = express();
 
 // Enable CORS for all requests
-app.use(cors());
+//app.use(cors());
 
 // Note: the order which we add middleware to Express here is important!
 app.use('/sys', mbaasExpress.sys(securableEndpoints));
@@ -22,7 +23,10 @@ app.use(express.static(__dirname + '/public'));
 // Note: important that this is added just before your own Routes
 app.use(mbaasExpress.fhmiddleware());
 
-app.use('/cloud', mbaasExpress.cloud(require('./main.js')));
+var jbpmPort = process.env.JBPM_PORT || process.env.OPENSHIFT_JBPM_PORT || 8080;
+var jbpmHost = process.env.OPENSHIFT_JBPM_IP || '0.0.0.0';
+
+app.use('/jbpm', proxy(jbpmHost + ':' + jbpmPort));
 
 // Important that this is last!
 app.use(mbaasExpress.errorHandler());

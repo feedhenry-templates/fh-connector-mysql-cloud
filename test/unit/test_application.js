@@ -109,7 +109,7 @@ exports['test all mbaas setup functions are called'] = function(done) {
 
 exports['test all required middleware is added to express'] = function(done) {
   var mock = sinon.mock(mockExpress);
-  mock.expects("use").once().withArgs(mockCorsHandler);
+  //mock.expects("use").once().withArgs(mockCorsHandler);
   mock.expects("use").once().withArgs(mockStaticHandler);
   mock.expects("use").once().withArgs(mockFhMiddlewareHandler);
   mock.expects("use").once().withArgs(mockErrorHandler);
