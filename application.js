@@ -1,7 +1,6 @@
 var mbaasApi = require('fh-mbaas-api');
 var express = require('express');
 var mbaasExpress = mbaasApi.mbaasExpress();
-//var cors = require('cors');
 var proxy = require('express-http-proxy');
 
 // list the endpoints which you want to make securable here
@@ -10,16 +9,13 @@ securableEndpoints = [];
 
 var app = express();
 
-var jbpmPort = process.env.JBPM_PORT || process.env.OPENSHIFT_JBPM_PORT || 8080;
-var jbpmHost = process.env.JBPM_IP || process.env.OPENSHIFT_JBPM_IP || '0.0.0.0';
-var jbpmUsername = process.env.JBPM_USERNAME || process.env.OPENSHIFT_JBPM_USERNAME || null;
-var jbpmPassword = process.env.JBPM_PASSWORD || process.env.OPENSHIFT_JBPM_PASSWORD || null;
+var jbpmPort = process.env.JBPM_PORT || 8080;
+var jbpmHost = process.env.JBPM_IP || '0.0.0.0';
+var jbpmUsername = process.env.JBPM_USERNAME || null;
+var jbpmPassword = process.env.JBPM_PASSWORD || null;
 
-var port = process.env.FH_PORT || process.env.OPENSHIFT_NODEJS_PORT || 8001;
-var host = process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
-
-// Enable CORS for all requests
-//app.use(cors());
+var port = process.env.FH_PORT || 8001;
+var host = '0.0.0.0';
 
 // Note: the order which we add middleware to Express here is important!
 app.use('/sys', mbaasExpress.sys(securableEndpoints));
@@ -33,8 +29,9 @@ app.use(mbaasExpress.fhmiddleware());
 
 app.use('/jbpm', proxy(jbpmHost + ':' + jbpmPort, {
   decorateRequest: function(proxyReq) {
-    if(jbpmUsername && jbpmPassword)
+    if(jbpmUsername && jbpmPassword) {
       proxyReq.headers['Authorization'] = 'Basic ' + new Buffer(jbpmUsername + ':' + jbpmPassword).toString('base64');
+    }
     return proxyReq;
   }
 }));

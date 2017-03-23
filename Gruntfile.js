@@ -120,34 +120,17 @@ module.exports = function(grunt) {
         path: './plato/index.html',
         app: 'Google Chrome'
       }
-    },
-    plato: {
-      src: {
-        options: {
-          jshint: grunt.file.readJSON('.jshintrc')
-        },
-        files: {
-          'plato': ['lib/**/*.js']
-        }
-      }
-    },
-    jshint: {
-      files: ['*.js', 'lib/**/*.js', 'test/**/*.js'],
-      options: {
-        jshintrc: true
-      }
-    },
+    }
   });
 
   // Load NPM tasks
   require('load-grunt-tasks')(grunt, {
     scope: 'devDependencies'
   });
-  grunt.loadNpmTasks('grunt-contrib-jshint');
 
   // Testing tasks
-  grunt.registerTask('test', ['jshint', 'shell:unit', 'shell:accept']);
-  grunt.registerTask('unit', ['jshint', 'shell:unit']);
+  grunt.registerTask('test', ['eslint','shell:unit', 'shell:accept']);
+  grunt.registerTask('unit', ['eslint','shell:unit']);
   grunt.registerTask('accept', ['env:local', 'shell:accept']);
 
   // Coverate tasks
