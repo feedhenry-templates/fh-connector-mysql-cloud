@@ -22,15 +22,15 @@ app.use('/sys', mbaasExpress.sys(securableEndpoints));
 app.use('/mbaas', mbaasExpress.mbaas);
 
 // allow serving of static files from the public directory
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(`${__dirname}'/public'`));
 
 // Note: important that this is added just before your own Routes
 app.use(mbaasExpress.fhmiddleware());
 
-app.use('/jbpm', proxy(jbpmHost + ':' + jbpmPort, {
+app.use('/jbpm', proxy(`${jbpmHost}:${jbpmPort}`, {
   decorateRequest: function(proxyReq) {
     if (jbpmUsername && jbpmPassword) {
-      proxyReq.headers['Authorization'] = 'Basic ' + new Buffer(jbpmUsername + ':' + jbpmPassword).toString('base64');
+      proxyReq.headers['Authorization'] = `Basic ${new Buffer(`${jbpmUsername}:${jbpmPassword}`).toString('base64')}`;
     }
     return proxyReq;
   }
@@ -40,5 +40,5 @@ app.use('/jbpm', proxy(jbpmHost + ':' + jbpmPort, {
 app.use(mbaasExpress.errorHandler());
 
 app.listen(port, host, function() {
-  console.log("App started at: " + new Date() + " on port: " + port);
+  console.log(`App started at: ${new Date()} on port: ${port}`); // eslint-disable-line
 });

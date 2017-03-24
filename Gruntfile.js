@@ -134,7 +134,7 @@ module.exports = function(grunt) {
   // Testing tasks
   grunt.registerTask('test', ['eslint','shell:unit', 'shell:accept']);
   grunt.registerTask('unit', ['eslint','shell:unit']);
-  grunt.registerTask('accept', ['env:local', 'shell:accept']);
+  grunt.registerTask('accept', ['env:local', 'eslint', 'shell:accept']);
 
   // Coverate tasks
   grunt.registerTask('coverage', ['shell:coverage_unit', 'shell:coverage_accept']);

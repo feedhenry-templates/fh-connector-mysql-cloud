@@ -15,7 +15,7 @@ exports['test_jbpm_reachable'] = function(done) {
     chai.request(SERVER_URL)
       .get(url)
       .end(function(err, res) {
-        expect(err).to.be.null; //jshint ignore:line
+        expect(err).to.be.null;
         expect(res).to.have.status(200);
 
         if (index === urls.length - 1) {
