@@ -10,7 +10,7 @@ var mockExpress = {
 var mockExpressApp = function() {
   return mockExpress;
 };
-var mockStaticHandler = function static(){};
+var mockStaticHandler = function static() {};
 mockExpressApp.static = function() {
   return mockStaticHandler;
 };
@@ -21,11 +21,11 @@ var mockSys;
 var mockFhMiddleware;
 var mockCloud;
 var mockError;
-var mockSysHandler = function sys(){};
-var mockMbaasHandler = function mbaas(){};
-var mockFhMiddlewareHandler = function fhmiddleware(){};
-var mockCloudHandler = function cloud(){};
-var mockErrorHandler = function errorHandler(){};
+var mockSysHandler = function sys() {};
+var mockMbaasHandler = function mbaas() {};
+var mockFhMiddlewareHandler = function fhmiddleware() {};
+var mockCloudHandler = function cloud() {};
+var mockErrorHandler = function errorHandler() {};
 var createMockMbaasApi = function() {
   return {
     mbaasExpress: sinon.spy(function() {

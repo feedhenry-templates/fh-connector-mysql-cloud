@@ -16,6 +16,7 @@
     "grunt-concurrent": "latest",
     "grunt-contrib-watch": "latest",
     "grunt-env": "~0.4.1",
+    "grunt-eslint": "^19.0.0",
     "grunt-node-inspector": ">=0.2.0",
     "grunt-nodemon": "0.4.2",
     "grunt-open": "~0.2.3",

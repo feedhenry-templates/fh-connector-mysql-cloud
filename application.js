@@ -29,7 +29,7 @@ app.use(mbaasExpress.fhmiddleware());
 
 app.use('/jbpm', proxy(jbpmHost + ':' + jbpmPort, {
   decorateRequest: function(proxyReq) {
-    if(jbpmUsername && jbpmPassword) {
+    if (jbpmUsername && jbpmPassword) {
       proxyReq.headers['Authorization'] = 'Basic ' + new Buffer(jbpmUsername + ':' + jbpmPassword).toString('base64');
     }
     return proxyReq;
@@ -40,5 +40,5 @@ app.use('/jbpm', proxy(jbpmHost + ':' + jbpmPort, {
 app.use(mbaasExpress.errorHandler());
 
 app.listen(port, host, function() {
-  console.log("App started at: " + new Date() + " on port: " + port); 
+  console.log("App started at: " + new Date() + " on port: " + port);
 });

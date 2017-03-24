@@ -18,7 +18,9 @@ exports['test_jbpm_reachable'] = function(done) {
         expect(err).to.be.null; //jshint ignore:line
         expect(res).to.have.status(200);
 
-        if(index === urls.length - 1) done();   
+        if (index === urls.length - 1) {
+          done();
+        }
       });
   });
-}
+};
