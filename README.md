@@ -1,5 +1,6 @@
 # Sample jBPM connector
 
+[![Dependency Status](https://img.shields.io/david/feedhenry-templates/fh-connector-jbpm.svg?style=flat-square)](https://david-dm.org/feedhenry-templates/fh-connector-jbpm)
 [![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
 > A connector service for interacting with jBPM
