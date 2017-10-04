@@ -4,6 +4,9 @@ module.exports = function(grunt) {
   require('time-grunt')(grunt);
   // Project Configuration
   grunt.initConfig({
+    eslint: {
+      target: ['application.js', 'test/**/*.js']
+    },
     pkg: grunt.file.readJSON('package.json'),
     watch: {
       js: {
@@ -79,6 +82,13 @@ module.exports = function(grunt) {
         },
         command: 'env NODE_PATH=. ./node_modules/.bin/mocha -A -u exports --recursive test/unit/'
       },
+      accept: {
+        options: {
+          stdout: true,
+          stderr: true
+        },
+        command: 'env NODE_PATH=. ./node_modules/.bin/mocha -A -u exports --recursive application.js test/accept/'
+      },
       coverage_unit: {
         options: {
           stdout: true,
@@ -99,33 +109,18 @@ module.exports = function(grunt) {
         path: './plato/index.html',
         app: 'Google Chrome'
       }
-    },
-    plato: {
-      src: {
-        options: {
-          jshint: grunt.file.readJSON('.jshintrc')
-        },
-        files: {
-          'plato': ['lib/**/*.js']
-        }
-      }
-    },
-    jshint: {
-      files: ['*.js', 'lib/**/*.js', 'test/**/*.js'],
-      options: {
-        jshintrc: true
-      }
-    },
+    }
   });
 
   // Load NPM tasks
   require('load-grunt-tasks')(grunt, {
     scope: 'devDependencies'
   });
-  grunt.loadNpmTasks('grunt-contrib-jshint');
 
   // Testing tasks
-  grunt.registerTask('test', ['env:local', 'shell:unit']);
+  grunt.registerTask('test', ['eslint','shell:unit', 'shell:accept']);
+  grunt.registerTask('unit', ['eslint','shell:unit']);
+  grunt.registerTask('accept', ['env:local', 'eslint', 'shell:accept']);
 
   // Coverate tasks
   grunt.registerTask('coverage', ['env:local', 'shell:coverage_unit']);

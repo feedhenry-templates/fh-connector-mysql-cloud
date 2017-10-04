@@ -10,7 +10,7 @@ var mockExpress = {
 var mockExpressApp = function() {
   return mockExpress;
 };
-var mockStaticHandler = function static(){};
+var mockStaticHandler = function static() {};
 mockExpressApp.static = function() {
   return mockStaticHandler;
 };
@@ -21,11 +21,11 @@ var mockSys;
 var mockFhMiddleware;
 var mockCloud;
 var mockError;
-var mockSysHandler = function sys(){};
-var mockMbaasHandler = function mbaas(){};
-var mockFhMiddlewareHandler = function fhmiddleware(){};
-var mockCloudHandler = function cloud(){};
-var mockErrorHandler = function errorHandler(){};
+var mockSysHandler = function sys() {};
+var mockMbaasHandler = function mbaas() {};
+var mockFhMiddlewareHandler = function fhmiddleware() {};
+var mockCloudHandler = function cloud() {};
+var mockErrorHandler = function errorHandler() {};
 var createMockMbaasApi = function() {
   return {
     mbaasExpress: sinon.spy(function() {
@@ -56,19 +56,12 @@ var createMockMbaasApi = function() {
   };
 };
 
-// simple mock cors middleware
-var mockCorsHandler = function cors(){};
-var mockCors = function() {
-  return mockCorsHandler;
-};
-
 // require the main app file, with mocked dependencies
 var runApp = function() {
   mockMbaasApi = createMockMbaasApi();
   proxyquire('application.js', {
     'express': mockExpressApp,
-    'fh-mbaas-api': mockMbaasApi,
-    'cors': mockCors
+    'fh-mbaas-api': mockMbaasApi
   });
 };
 
@@ -109,7 +102,6 @@ exports['test all mbaas setup functions are called'] = function(done) {
 
 exports['test all required middleware is added to express'] = function(done) {
   var mock = sinon.mock(mockExpress);
-  mock.expects("use").once().withArgs(mockCorsHandler);
   mock.expects("use").once().withArgs(mockStaticHandler);
   mock.expects("use").once().withArgs(mockFhMiddlewareHandler);
   mock.expects("use").once().withArgs(mockErrorHandler);

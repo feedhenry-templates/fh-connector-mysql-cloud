@@ -1,52 +1,72 @@
-# FeedHenry MySQL Connector
+# Sample jBPM connector
 
-[![Dependency Status](https://img.shields.io/david/feedhenry-templates/fh-connector-mysql-cloud.svg?style=flat-square)](https://david-dm.org/feedhenry-templates/fh-connector-mysql-cloud)
+[![Dependency Status](https://img.shields.io/david/feedhenry-templates/fh-connector-jbpm.svg?style=flat-square)](https://david-dm.org/feedhenry-templates/fh-connector-jbpm)
+[![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
-The FeedHenry MySQL Connector. For more information on MySQL see: [https://github.com/felixge/node-mysql](https://github.com/felixge/node-mysql).
+> A connector service for interacting with jBPM
 
-## Group MySQL Connector API
+## Table of Contents
 
-### MySQL Query
+- [Build](#Build)
+- [Usage](#usage)
+- [API](#api)
+- [Contribute](#contribute)
+- [License](#license)
 
-|              |              |
-|--------------|--------------|
-| Endpoint     | /cloud/mysql |
-| HTTP Method  | POST         |
+## Build
 
+### Adding Unit Tests
 
-#### Request (application/json)
+Unit tests should be added to the same directory of the test target file. It should have a prefix with "test_". To run all the tests:
 
-##### Body
- 
-```shell
-{
-    "query": "select * from my_table"
-}
+```bash
+grunt unit
 ```
 
-#### Response 200 (application/json)
+### Running Acceptance Tests
 
-##### Body
- 
-```shell
-{
-    "column_a": "value",
-    "column_b": "value"
-}
+In order to run the acceptance tests, you will need to have jBPM running somewhere. Refer to [Docker](#Docker) for more details.
+
+You also need to set the process environments: 
+
+```bash
+export JBPM_IP= #jBPM host's IP address
+export JBPM_PORT= #jBPM port
+export JBPM_USERNAME= #Your jBPM username
+export JBPM_PASSWORD= #Your jBPM password
 ```
 
-## Tests
+Finally, you can run the acceptance tests:
 
-All the tests are in the "test/" directory. The cloud app is using mocha as the test runner. 
-
-### Unit tests
-
-```shell
-npm run unit
+```bash
+grunt accept
 ```
 
-### Unit coverage
+#### Docker
 
-```shell
-npm run coverage
+If you have [docker](https://www.docker.com/), you can initialise a jBPM instance configured to run acceptance tests against.
+
+```bash
+$ docker run -ti -p 8080:8080 fabric8/fabric8-jbpm-designer
 ```
+
+## Usage
+
+To start the service, run
+
+```bash
+node application.js
+```
+
+## API
+This connector forwards your requests to jBPM so you can use jBPM's API. You only have to prepend the endpoints with `jbpm`, e.g. `http://host:port/jbpm/rest/history/instances`
+
+## Contribute
+
+PRs accepted.
+
+Small note: If editing the README, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
+
+## License
+
+MIT © RedHat
